@@ -1,0 +1,5 @@
+int64 a                                             # first argument  (first number to add)     (Request)
+int64 b                                             # second argument (second number to add)    (Request)
+my_robot_msgs/MyNewSensor my_var
+---
+int64 sum       # response of sum a + b                     (Response)
