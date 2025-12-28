@@ -100,10 +100,9 @@ nav_msgs::msg::Path AStarPlanner::plan(const geometry_msgs::msg::Pose & start, c
             GraphNode new_node = active_node + dir;
 
             if (std::find(visited_nodes.begin(), visited_nodes.end(), new_node) == visited_nodes.end() &&
-                poseOnMap(new_node) && map_->data.at(poseToCell(new_node)) < 99 &&
-                map_->data.at(poseToCell(new_node)) >= 0) {
+                poseOnMap(new_node) && map_->data.at(poseToCell(new_node)) == 0) {
                 
-                new_node.cost = active_node.cost + 1 + map_->data.at(poseToCell(new_node));
+                new_node.cost = active_node.cost + 1;
                 new_node.heuristic = manhattanDistance(new_node, goal_node);
                 new_node.prev = std::make_shared<GraphNode>(active_node);
                 

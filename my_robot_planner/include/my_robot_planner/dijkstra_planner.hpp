@@ -70,6 +70,6 @@ private:
 
     unsigned int poseToCell(const GraphNode & node);
 };
-}  // namespace bumperbot_planning
+}  // namespace my_robot_planning
 
 #endif // DIJKSTRA_PLANNER_HPP

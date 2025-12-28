@@ -74,8 +74,7 @@ def generate_launch_description():
         executable="create",
         output="screen",
         arguments=["-topic", "robot_description",
-                   "-name", "my_robot",
-                   "-x", "1.0" ],
+                   "-name", "my_robot"],
     )
 
     # gz_spawn_entity = Node(

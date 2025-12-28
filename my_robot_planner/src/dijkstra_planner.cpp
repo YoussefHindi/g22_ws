@@ -95,10 +95,9 @@ nav_msgs::msg::Path DijkstraPlanner::plan(const geometry_msgs::msg::Pose & start
             GraphNode new_node = active_node + dir;
             // Check if the new position is within bounds and not an obstacle
             if (std::find(visited_nodes.begin(), visited_nodes.end(), new_node) == visited_nodes.end() &&
-                poseOnMap(new_node) && map_->data.at(poseToCell(new_node)) < 99 &&
-                map_->data.at(poseToCell(new_node)) >= 0) {
+                poseOnMap(new_node) && map_->data.at(poseToCell(new_node)) == 0) {
                 // If the node is not visited, add it to the queue
-                new_node.cost = active_node.cost + 1 + map_->data.at(poseToCell(new_node));
+                new_node.cost = active_node.cost + 1;
                 new_node.prev = std::make_shared<GraphNode>(active_node);
                 pending_nodes.push(new_node);
                 visited_nodes.push_back(new_node);

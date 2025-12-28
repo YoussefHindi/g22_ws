@@ -3,6 +3,7 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument, GroupAction, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
+from launch.conditions import UnlessCondition, IfCondition
 
 
 def noisy_controller(context, *args, **kwargs):
@@ -23,6 +24,10 @@ def generate_launch_description():
         "use_sim_time",
         default_value="True",
     )
+    use_simple_controller_arg = DeclareLaunchArgument(
+        "use_simple_controller",
+        default_value="True",
+    )
  
     wheel_radius_arg = DeclareLaunchArgument(
         "wheel_radius",
@@ -32,9 +37,11 @@ def generate_launch_description():
         "wheel_separation",
         default_value="0.17",
     )
+
  
     
     use_sim_time = LaunchConfiguration("use_sim_time")
+    use_simple_controller = LaunchConfiguration("use_simple_controller")
     wheel_radius = LaunchConfiguration("wheel_radius")
     wheel_separation = LaunchConfiguration("wheel_separation")
 
@@ -56,10 +63,12 @@ def generate_launch_description():
         arguments=["diff_drive_controller",
                 "--controller-manager",
                 "/controller_manager"
-        ]
+        ],
+        condition=UnlessCondition(use_simple_controller),
     )
 
     simple_controller = GroupAction(
+        condition=IfCondition(use_simple_controller),
         actions=[
             Node(
                 package="controller_manager",
@@ -85,11 +94,12 @@ def generate_launch_description():
     return LaunchDescription(
         [
             use_sim_time_arg,
+            use_simple_controller_arg,
             wheel_radius_arg,
             wheel_separation_arg,
 
             joint_state_broadcaster_spawner,
-            # simple_controller,
+            simple_controller,
             diff_drive_controller,
             # noisy_controller_launch,
         ]

@@ -73,6 +73,6 @@ private:
 
     double manhattanDistance(const GraphNode &node, const GraphNode &goal_node);
 };
-}  // namespace bumperbot_planning
+}  // namespace my_robot_planning
 
 #endif // A_STAR_PLANNER_HPP
